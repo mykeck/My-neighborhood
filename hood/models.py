@@ -2,6 +2,7 @@ from django.db import models
 from django.db.models import Q
 from tinymce.models import HTMLField
 from django.contrib.auth.models import User
+from cloudinary.models import CloudinaryField
 
 # Create your models here.
 class neighbourhood(models.Model):
@@ -44,7 +45,7 @@ class healthservices(models.Model):
 
 
 class Business(models.Model):
-    logo = models.ImageField(upload_to='businesslogo/')
+    logo = CloudinaryField('image',blank=True)
     description = HTMLField()
     neighbourhood = models.ForeignKey(neighbourhood,on_delete=models.CASCADE)
     owner = models.ForeignKey(User,on_delete=models.CASCADE)
@@ -54,5 +55,28 @@ class Business(models.Model):
     contact = models.IntegerField()
 
     def __str__(self):
-        return self.name           
+        return self.name   
+
+
+class Health(models.Model):
+    logo = CloudinaryField('image',blank=True)
+    neighbourhood = models.ForeignKey(neighbourhood,on_delete=models.CASCADE)
+    name =models.CharField(max_length=100)
+    email = models.EmailField()
+    contact = models.IntegerField()
+    address =models.CharField(max_length=100)
+    healthservices = models.ManyToManyField(healthservices)
+
+    def __str__(self):
+        return self.name
+
+class Authorities(models.Model):
+    neighbourhood = models.ForeignKey(neighbourhood,on_delete=models.CASCADE)
+    name =models.CharField(max_length=100)
+    email = models.EmailField()
+    contact = models.IntegerField()
+    address =models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name                
 

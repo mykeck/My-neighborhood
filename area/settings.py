@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 import os
 from pathlib import Path
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -31,6 +34,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'cloudinary',
     'tinymce',
     'bootstrap4',
     'hood.apps.HoodConfig',
@@ -130,3 +134,9 @@ STATICFILES_DIRS =[
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+cloudinary.config( 
+  cloud_name = "dbhe0lknh", 
+  api_key = "843881231652611", 
+  api_secret = "J9PRsc2CJ-02Y3Exg9Mja8Kc8DA" 
+)
