@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'tinymce',
     'bootstrap4',
     'hood.apps.HoodConfig',
     'django.contrib.admin',
