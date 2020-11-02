@@ -78,5 +78,28 @@ class Authorities(models.Model):
     address =models.CharField(max_length=100)
 
     def __str__(self):
-        return self.name                
+        return self.name  
+
+class BlogPost(models.Model):
+    title = models.CharField(max_length=150)
+    image = CloudinaryField('image',blank=True)
+    post = HTMLField()
+    username = models.ForeignKey(User,on_delete=models.CASCADE)
+    neighbourhood= models.ForeignKey(neighbourhood,on_delete=models.CASCADE)
+    post_date = models.DateTimeField(auto_now_add=True)
+    avatar = CloudinaryField('image',blank=True)
+
+    def __str__(self):
+        return self.title
+
+    @classmethod
+    def search_blogpost(cls,search_term):
+        blogs = cls.objects.filter(Q(username__username=search_term) | Q(neighbourhood__neighbourhood=search_term) | Q(title__icontains=search_term))
+        return blogs
+
+
+class Comment(models.Model):
+    comment = models.CharField(max_length=300)
+    username = models.ForeignKey(User,on_delete=models.CASCADE)
+    post = models.ForeignKey(BlogPost,on_delete=models.CASCADE)                      
 
