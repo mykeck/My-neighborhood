@@ -40,5 +40,19 @@ class healthservices(models.Model):
 
     @classmethod
     def delete_healthservices(cls,healthservices):
-        cls.objects.filter(healthservices=healthservices).delete()        
+        cls.objects.filter(healthservices=healthservices).delete()     
+
+
+class Business(models.Model):
+    logo = models.ImageField(upload_to='businesslogo/')
+    description = HTMLField()
+    neighbourhood = models.ForeignKey(neighbourhood,on_delete=models.CASCADE)
+    owner = models.ForeignKey(User,on_delete=models.CASCADE)
+    name =models.CharField(max_length=100)
+    email = models.EmailField()
+    address =models.CharField(max_length=100)
+    contact = models.IntegerField()
+
+    def __str__(self):
+        return self.name           
 
