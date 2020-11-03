@@ -4,6 +4,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from .models import neighbourhood,healthservices,Business,Health,Authorities,Profile
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.views import logout
 
 # Create your views here.
 def register(request):

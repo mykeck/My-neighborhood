@@ -17,3 +17,5 @@ urlpatterns=[
     
     # url(r'^view/blog/(\d+)',views.view_blog,name='view_blog'),
 ]
+if settings.DEBUG:
+    urlpatterns+= static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
