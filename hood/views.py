@@ -3,6 +3,7 @@ from django.http import HttpResponse,Http404,HttpResponseRedirect
 from django.core.exceptions import ObjectDoesNotExist
 from .models import neighbourhood,healthservices,Business,Health,Authorities,Profile
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def register(request):
@@ -26,6 +27,7 @@ def index(request):
 
     return render(request,'index.html')  
 
+@login_required(login_url='/accounts/login/')
 def notification(request):
     current_user=request.user
     profile=Profile.objects.get(username=current_user)
@@ -33,6 +35,7 @@ def notification(request):
 
     return render(request,'notifications.html',{"notifications":all_notifications})   
 
+@login_required(login_url='/accounts/login/')
 def blog(request):
     current_user=request.user
     profile=Profile.objects.get(username=current_user)
@@ -41,6 +44,7 @@ def blog(request):
     return render(request,'blog.html',{"blogposts":blogposts})  
 
 
+@login_required(login_url='/accounts/login/')
 def health(request):
     current_user=request.user
     profile=Profile.objects.get(username=current_user)
@@ -48,7 +52,7 @@ def health(request):
 
     return render(request,'health.html',{"healthservices":healthservices})
 
-
+@login_required(login_url='/accounts/login/')
 def authorities(request):
     current_user=request.user
     profile=Profile.objects.get(username=current_user)
@@ -57,6 +61,7 @@ def authorities(request):
     return render(request,'authorities.html',{"authorities":authorities})
 
 
+@login_required(login_url='/accounts/login/')
 def businesses(request):
     current_user=request.user
     profile=Profile.objects.get(username=current_user)
