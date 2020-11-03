@@ -2,7 +2,9 @@ from django.db import models
 from django.db.models import Q
 from tinymce.models import HTMLField
 from django.contrib.auth.models import User
-from cloudinary.models import CloudinaryField
+from django.dispatch import receiver
+from django.db.models.signals import post_save
+from django.core.exceptions import ObjectDoesNotExist
 
 # Create your models here.
 class neighbourhood(models.Model):
@@ -45,7 +47,7 @@ class healthservices(models.Model):
 
 
 class Business(models.Model):
-    logo = CloudinaryField('image',blank=True)
+    logo = models.ImageField(upload_to='businesslogo/')
     description = HTMLField()
     neighbourhood = models.ForeignKey(neighbourhood,on_delete=models.CASCADE)
     owner = models.ForeignKey(User,on_delete=models.CASCADE)
@@ -59,7 +61,7 @@ class Business(models.Model):
 
 
 class Health(models.Model):
-    logo = CloudinaryField('image',blank=True)
+    logo = models.ImageField(upload_to='healthlogo/')
     neighbourhood = models.ForeignKey(neighbourhood,on_delete=models.CASCADE)
     name =models.CharField(max_length=100)
     email = models.EmailField()
@@ -80,14 +82,50 @@ class Authorities(models.Model):
     def __str__(self):
         return self.name  
 
+class Profile(models.Model):
+
+    avatar = models.ImageField(upload_to='avatars/')
+    name=models.CharField(max_length=50,blank=True)
+    user_id=models.OneToOneField(User,null=True,on_delete=models.CASCADE)
+    neighbourhood = models.ForeignKey(neighbourhood, null=True,on_delete=models.CASCADE)
+    email_address=models.CharField(max_length=50,blank=True) 
+
+
+    def __str__(self):
+        return self.name
+
+    def save_user(self):
+        self.save()    
+
+    @receiver(post_save, sender=User)
+    def create_user_profile(sender,instance,created,**kwargs):
+        if created:
+            Profile.objects.create(user_id=instance)
+    
+    @receiver(post_save, sender=User)
+    def save_profile(sender,instance,**kwargs):
+        try:
+
+            instance.profile.save()
+
+        except ObjectDoesNotExist:
+
+            Profile.objects.create(user=instance)
+    
+
+
+       
+
+           
+
 class BlogPost(models.Model):
     title = models.CharField(max_length=150)
-    image = CloudinaryField('image',blank=True)
+    image = models.ImageField(upload_to='post/')
     post = HTMLField()
     username = models.ForeignKey(User,on_delete=models.CASCADE)
     neighbourhood= models.ForeignKey(neighbourhood,on_delete=models.CASCADE)
     post_date = models.DateTimeField(auto_now_add=True)
-    avatar = CloudinaryField('image',blank=True)
+    avatar = models.ImageField(upload_to='avatars/')
 
     def __str__(self):
         return self.title
