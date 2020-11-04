@@ -110,7 +110,7 @@ class Profile(models.Model):
 
         except ObjectDoesNotExist:
 
-            Profile.objects.create(user=instance)
+            Profile.objects.create(username=instance)
     
 
 
