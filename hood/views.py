@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse,Http404,HttpResponseRedirect
 from django.core.exceptions import ObjectDoesNotExist
-from .models import neighbourhood,healthservices,Business,Health,Authorities,Profile
+from .models import neighbourhood,healthservices,Business,Health,Authorities,Profile,BlogPost
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import logout
@@ -39,7 +39,7 @@ def notification(request):
 @login_required(login_url='/accounts/login/')
 def blog(request):
     current_user=request.user
-    profile=Profile.objects.get(username=current_user)
+    # profile=Profile.objects.get(username=current_user)
     blogposts = BlogPost.objects.filter(neighbourhood=profile.neighbourhood)
 
     return render(request,'blog.html',{"blogposts":blogposts})  
