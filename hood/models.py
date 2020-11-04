@@ -86,7 +86,7 @@ class Profile(models.Model):
 
     avatar = models.ImageField(upload_to='avatars/')
     name=models.CharField(max_length=50,blank=True)
-    user_id=models.OneToOneField(User,null=True,on_delete=models.CASCADE)
+    username=models.OneToOneField(User,null=True,on_delete=models.CASCADE)
     neighbourhood = models.ForeignKey(neighbourhood, null=True,on_delete=models.CASCADE)
     email_address=models.CharField(max_length=50,blank=True) 
 
@@ -100,7 +100,7 @@ class Profile(models.Model):
     @receiver(post_save, sender=User)
     def create_user_profile(sender,instance,created,**kwargs):
         if created:
-            Profile.objects.create(user_id=instance)
+            Profile.objects.create(username=instance)
     
     @receiver(post_save, sender=User)
     def save_profile(sender,instance,**kwargs):

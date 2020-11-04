@@ -1,6 +1,6 @@
 # Neighboorhood Watch
 ### An application that allows users know what is happening in their neighborhood Version 1.0.0.
-### By 
+### By /-/
 ## Description
 This is a web application that allows one to be in the loop about everything happening in their neighborhood. From contact information of different repairmen, to meeting announcements or alerts.
 At minimum it allows a user to
