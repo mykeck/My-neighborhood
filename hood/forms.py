@@ -14,7 +14,7 @@ class ProfileForm(forms.ModelForm):
 class BlogPostForm(forms.ModelForm):
     class Meta:
         model=BlogPost
-        exclude=['username','neighbourhood','avatar']
+        exclude=['username','avatar']
 
 class BusinessForm(forms.ModelForm):
     class Meta:

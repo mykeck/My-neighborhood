@@ -7,7 +7,7 @@ from django.contrib.auth.views import LoginView,LogoutView
 
 
 urlpatterns=[
-    url(r'^$',views.index,name='Index'),
+    url(r'^index',views.index,name='index'),
     url(r'^$',views.register,name ='register'),
     url(r'accounts/', include('django.contrib.auth.urls')),
     url(r'^notifications',views.notification, name='notifications'),

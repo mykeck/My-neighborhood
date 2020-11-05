@@ -41,7 +41,7 @@ def notification(request):
 def blog(request):
     current_user=request.user
     profile=Profile.objects.get(username=current_user)
-    blogposts = BlogPost.objects.filter(neighbourhood=profile.neighbourhood)
+    blogposts = BlogPost.objects.all()
 
     return render(request,'blog.html',{"blogposts":blogposts})  
 
@@ -117,7 +117,6 @@ def user_profile(request,username):
 def new_blogpost(request):
     current_user=request.user
     profile =Profile.objects.get(username=current_user)
-    neighbourhood= neighbourhood.objects.get(user=hood)
 
     if request.method=="POST":
         form =BlogPostForm(request.POST,request.FILES)

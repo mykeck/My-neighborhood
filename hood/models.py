@@ -123,7 +123,6 @@ class BlogPost(models.Model):
     image = models.ImageField(upload_to='post/')
     post = HTMLField()
     username = models.ForeignKey(User,on_delete=models.CASCADE)
-    neighbourhood= models.ForeignKey(neighbourhood,on_delete=models.CASCADE)
     post_date = models.DateTimeField(auto_now_add=True)
     avatar = models.ImageField(upload_to='avatars/')
 
